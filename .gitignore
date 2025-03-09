@@ -1,2 +1,7 @@
 skinet/API/appsettings.Development.json
 skinet/API/appsettings.json
+skinet/Infrastructure/Migrations/20250210094240_InitialCreate.cs
+skinet/Infrastructure/Migrations/20250210094240_InitialCreate.cs
+skinet/Infrastructure/Migrations/20250210094240_InitialCreate.Designer.cs
+skinet/Infrastructure/Migrations/20250210094240_InitialCreate.cs
+skinet/Infrastructure/Migrations/20250210094240_InitialCreate.cs
