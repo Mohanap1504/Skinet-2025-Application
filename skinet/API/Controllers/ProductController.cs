@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks.Dataflow;
+using API.RequestHelpers;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specificatio;
@@ -12,18 +13,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class ProductController(IGenericRepository<Product> repo) : ControllerBase
+public class ProductController(IGenericRepository<Product> repo) : BaseAPIController
 {
 
   [HttpGet]
-  public async Task<ActionResult<IReadOnlyList<Product>>> GetProduct(string? brand, string? type, string? sort)
+  public async Task<ActionResult<IReadOnlyList<Product>>> GetProduct([FromQuery]ProductSpecParam specParam)
   {
-    var spec = new ProductSpecification(brand, type, sort);
+    var spec = new ProductSpecification(specParam);
     var products = await repo.ListAsync(spec);
+    var count = await repo.CountAsync(spec);
 
-    return Ok(products);
+    return await CreatePagedResult(repo, spec, specParam.PageIndex, specParam.PageSize);
   }
 
   [HttpGet("{id:int}")] //api/products/id

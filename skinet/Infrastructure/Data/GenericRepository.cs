@@ -73,4 +73,13 @@ public class GenericRepository<T>(Storedata context) : IGenericRepository<T> whe
     {
         return await ApplySpecification(spec).ToListAsync();
     }
+
+    public async Task<int> CountAsync(ISpecification<T> spec)
+    {
+         var query = context.Set<T>().AsQueryable();
+ 
+         query = spec.ApplyCriteria(query);
+ 
+         return await query.CountAsync();
+    }
 }
